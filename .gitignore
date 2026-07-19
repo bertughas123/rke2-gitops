@@ -1,0 +1,71 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor and local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+.tmp/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Kubernetes and cluster access
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+*.kubeconfig.yaml
+*.kubeconfig.yml
+admin.conf
+
+# Secrets and keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+known_hosts
+secret.yaml
+secrets.yaml
+*-secret.yaml
+*-secrets.yaml
+
+# Terraform and local IaC state, if experiments are added later
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Helm local output
+charts/*.tgz
+*.tgz
+
+# Node/package manager cache, if helper tools are added
+node_modules/
+.npm/
+.pnpm-store/
+coverage/
+dist/
+build/
+
+#phase docs
+docs/phases/
