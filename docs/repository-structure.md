@@ -33,6 +33,7 @@ rke2-gitops/
 ├── docs/
 │   ├── concepts.md
 │   ├── decisions.md
+│   ├── git-ssh-identity.md
 │   ├── host-bootstrap.md
 │   ├── host-tools.md
 │   ├── placeholders.md
