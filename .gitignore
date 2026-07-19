@@ -69,3 +69,6 @@ build/
 
 #phase docs
 docs/phases/
+
+# Local planning notes
+rke2-gitops-portfoy-aksiyon-plani-final.md

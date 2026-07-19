@@ -31,11 +31,13 @@ credentials, Kubernetes Secrets during bootstrap, or OpenBao.
 
 ## Phase Status
 
-Current phase: Phase 0 - preparation and decisions.
+Current phase: Phase 1 completed. Preparing Phase 2 - Argo CD bootstrap.
 
-No VM or Kubernetes cluster is expected to exist at this point.
+Local RKE2 single-node cluster exists on Multipass VM `rke2-server`.
 
 See [docs/repository-structure.md](docs/repository-structure.md) for the current
 two-repository layout.
 
 For repeatable macOS host setup, see [docs/host-bootstrap.md](docs/host-bootstrap.md).
+
+For the Phase 1 completion record, see [docs/phase-1-report.md](docs/phase-1-report.md).

@@ -4,10 +4,10 @@ This project uses two GitHub repositories.
 
 ## Repositories
 
-| Repository | Responsibility | Phase 0 local path |
-| --- | --- | --- |
-| `rke2-gitops` | GitOps desired state, Argo CD resources, Helm chart, values files and documentation | `/Users/bertughas/Documents/rke2-gitops/rke2-gitops` |
-| `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts | `/Users/bertughas/Documents/rke2-gitops/app-for-gitops` |
+| Repository         | Responsibility                                                                      | Phase 0 local path                                        |
+| ------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `rke2-gitops`    | GitOps desired state, Argo CD resources, Helm chart, values files and documentation | `/Users/bertughas/Documents/rke2-gitops/rke2-gitops`    |
+| `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts              | `/Users/bertughas/Documents/rke2-gitops/app-for-gitops` |
 
 These are sibling repositories under the same parent directory:
 
@@ -21,7 +21,7 @@ They are pushed to GitHub separately. `rke2-gitops` is not the parent repository
 of `app-for-gitops`, and `app-for-gitops` must not be committed inside
 `rke2-gitops`.
 
-## Current Phase 0 Tree
+## Current Phase 1 Tree
 
 ### `rke2-gitops`
 
@@ -36,12 +36,16 @@ rke2-gitops/
 │   ├── git-ssh-identity.md
 │   ├── host-bootstrap.md
 │   ├── host-tools.md
+│   ├── phase-1-report.md
 │   ├── placeholders.md
 │   ├── repository-structure.md
 │   ├── security-model.md
+│   ├── troubleshooting.md
 │   └── phases/
 │       ├── faz-0.md
-│       └── faz-0-manuel-git-push.md
+│       ├── faz-0-manuel-git-push.md
+│       ├── faz1.md
+│       └── faz2.md
 └── rke2-gitops-portfoy-aksiyon-plani-final.md
 ```
 
