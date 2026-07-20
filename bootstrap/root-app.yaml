@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:<GITHUB_USERNAME>/rke2-gitops.git
+    repoURL: git@github.com:bertughas123/rke2-gitops.git
     targetRevision: main
     path: argocd
   destination:
