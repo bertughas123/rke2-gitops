@@ -15,10 +15,10 @@ The project demonstrates:
 
 ## Repository Split
 
-| Repository      | Responsibility                                                                         |
-| --------------- | -------------------------------------------------------------------------------------- |
-| `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts              |
-| `rke2-gitops` | Kubernetes manifests, Argo CD applications, Helm chart, values files and documentation |
+| Repository         | Responsibility                                                                         |
+| ------------------ | -------------------------------------------------------------------------------------- |
+| `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts                 |
+| `rke2-gitops`    | Kubernetes manifests, Argo CD applications, Helm chart, values files and documentation |
 
 ## Security Rule
 
@@ -31,9 +31,25 @@ credentials, Kubernetes Secrets during bootstrap, or OpenBao.
 
 ## Phase Status
 
-Current phase: Phase 1 completed. Preparing Phase 2 - Argo CD bootstrap.
+Current phase: Phase 2 completed. Preparing the next application/bootstrap
+phase.
 
 Local RKE2 single-node cluster exists on Multipass VM `rke2-server`.
+
+Argo CD `v3.4.5` is installed on the cluster and bootstrapped with Kustomize
+through `bootstrap-root`.
+
+Current GitOps bootstrap path:
+
+```text
+bootstrap/root-app.yaml -> argocd/kustomization.yaml
+```
+
+The `argocd` path currently manages:
+
+- `Namespace/argocd`;
+- `AppProject/dev`;
+- `AppProject/platform`.
 
 See [docs/repository-structure.md](docs/repository-structure.md) for the current
 two-repository layout.
@@ -41,3 +57,5 @@ two-repository layout.
 For repeatable macOS host setup, see [docs/host-bootstrap.md](docs/host-bootstrap.md).
 
 For the Phase 1 completion record, see [docs/phase-1-report.md](docs/phase-1-report.md).
+
+For the Phase 2 completion record, see [docs/phase-2-report.md](docs/phase-2-report.md).
