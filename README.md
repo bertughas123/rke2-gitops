@@ -36,18 +36,22 @@ phase.
 
 Local RKE2 single-node cluster exists on Multipass VM `rke2-server`.
 
-Argo CD `v3.4.5` is installed on the cluster and bootstrapped with Kustomize
-through `bootstrap-root`.
+Argo CD `v3.4.5` is installed on the cluster and bootstrapped through
+`bootstrap-root`.
 
 Current GitOps bootstrap path:
 
 ```text
-bootstrap/root-app.yaml -> argocd/kustomization.yaml
+bootstrap/root-app.yaml -> argocd/ recursive directory
 ```
 
-The `argocd` path currently manages:
+`bootstrap-root` follows the `argocd` path with `directory.recurse: true`.
+Therefore every real manifest YAML under `argocd/` is in bootstrap scope.
+
+The `argocd` path currently contains:
 
 - `Namespace/argocd`;
+- `Namespace/dev`;
 - `AppProject/dev`;
 - `AppProject/platform`.
 

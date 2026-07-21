@@ -21,15 +21,16 @@ They are pushed to GitHub separately. `rke2-gitops` is not the parent repository
 of `app-for-gitops`, and `app-for-gitops` must not be committed inside
 `rke2-gitops`.
 
-## Current Phase 2 Preparation Tree
+## Current GitOps Tree
 
 ### `rke2-gitops`
 
 ```text
 rke2-gitops/
 ├── argocd/
-│   ├── kustomization.yaml
-│   ├── namespace.yaml
+│   ├── namespaces/
+│   │   ├── argocd.yaml
+│   │   └── dev.yaml
 │   └── projects/
 │       ├── dev.yaml
 │       └── platform.yaml
@@ -60,18 +61,30 @@ rke2-gitops/
 └── rke2-gitops-portfoy-aksiyon-plani-final.md
 ```
 
-## Phase 2 Argo CD Kustomize Boundary
+## Argo CD Recursive Directory Boundary
 
 `bootstrap/root-app.yaml` points Argo CD at the `argocd` path.
 
-Because `argocd/kustomization.yaml` exists, Argo CD should treat that path as a
-Kustomize application. Only files listed in the `resources` list are managed:
+The current bootstrap model uses Argo CD directory recursion:
+
+```yaml
+directory:
+  recurse: true
+```
+
+There is no `argocd/kustomization.yaml` in the current model. Argo CD reads real
+manifest YAML files under `argocd/` recursively.
+
+Current bootstrap-managed manifests:
 
 ```text
-argocd/namespace.yaml
+argocd/namespaces/argocd.yaml
+argocd/namespaces/dev.yaml
 argocd/projects/dev.yaml
 argocd/projects/platform.yaml
 ```
+
+Empty folders are not tracked with placeholder files.
 
 The repository Secret example is deliberately outside the `argocd` tree:
 

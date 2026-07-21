@@ -10,7 +10,7 @@ Phase 2 successfully bootstrapped Argo CD on the local RKE2 cluster.
 
 Argo CD is installed, reachable through local `kubectl port-forward`, connected
 to the GitOps repository with a read-only GitHub Deploy Key, and managing the
-bootstrap resources through Kustomize.
+bootstrap resources from the `argocd` path.
 
 ## Versions
 
@@ -21,6 +21,7 @@ bootstrap resources through Kustomize.
 | Argo CD install manifest | pinned `v3.4.5` manifest |
 | Tracked Git branch | `main` |
 | Argo CD source path | `argocd` |
+| Current source mode | recursive directory |
 
 ## Cluster Baseline
 
@@ -144,17 +145,23 @@ dev        10m
 platform   10m
 ```
 
-Kustomize manages:
+Current bootstrap-managed manifests:
 
 ```text
 Namespace/argocd
+Namespace/dev
 AppProject/dev
 AppProject/platform
 ```
 
-The root Application points to the `argocd` path. Because
-`argocd/kustomization.yaml` exists, Argo CD processes that path with Kustomize.
-Only resources listed in `argocd/kustomization.yaml` are managed.
+The root Application points to the `argocd` path and uses
+`directory.recurse: true`. There is no current `argocd/kustomization.yaml`.
+Argo CD reads real manifest YAML files under `argocd/` recursively.
+
+The initial Phase 2 bootstrap was first validated with a Kustomize layout. After
+the namespace/project structure was clarified, the repository was prepared for
+the recursive directory model so that simple manifest files under `argocd/` are
+picked up directly.
 
 ## Security Notes
 
