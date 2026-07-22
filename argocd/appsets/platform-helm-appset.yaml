@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-helm
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
+  generators:
+  - git:
+      repoURL: git@github.com:bertughas123/rke2-gitops.git
+      revision: main
+      files:
+      - path: platform-values/*/source.yaml
+  template:
+    metadata:
+      name: platform-helm-{{.name}}
+    spec:
+      project: platform
+      sources:
+      - repoURL: "{{.repoURL}}"
+        chart: "{{.chart}}"
+        targetRevision: "{{.targetRevision}}"
+        helm:
+          valueFiles:
+          - $values/{{.valuesPath}}
+      - repoURL: git@github.com:bertughas123/rke2-gitops.git
+        targetRevision: main
+        ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{.namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  syncPolicy:
+    preserveResourcesOnDeletion: true

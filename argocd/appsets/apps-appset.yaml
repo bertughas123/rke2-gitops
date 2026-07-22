@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  goTemplate: true
+  goTemplateOptions:
+  - missingkey=error
+  generators:
+  - git:
+      repoURL: git@github.com:bertughas123/rke2-gitops.git
+      revision: main
+      directories:
+      - path: apps-values/dev/*
+  template:
+    metadata:
+      name: dev-{{.path.basenameNormalized}}
+    spec:
+      project: dev
+      sources:
+      - repoURL: https://github.com/bertughas123/reusable-helm-charts.git
+        targetRevision: generic-app-chart-v0.1.0
+        path: charts/generic-app-chart
+        helm:
+          releaseName: "{{.path.basenameNormalized}}"
+          valueFiles:
+          - $values/{{.path.path}}/values.yaml
+      - repoURL: git@github.com:bertughas123/rke2-gitops.git
+        targetRevision: main
+        ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: dev
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+  syncPolicy:
+    preserveResourcesOnDeletion: true
