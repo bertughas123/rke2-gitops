@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-demo-app
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  project: dev
+  sources:
+  - repoURL: https://github.com/bertughas123/reusable-helm-charts.git
+    targetRevision: generic-app-chart-v0.1.0
+    path: charts/generic-app-chart
+    helm:
+      releaseName: demo-app
+      valueFiles:
+      - $values/apps-values/dev/demo-app/values.yaml
+  - repoURL: git@github.com:bertughas123/rke2-gitops.git
+    targetRevision: main
+    ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
