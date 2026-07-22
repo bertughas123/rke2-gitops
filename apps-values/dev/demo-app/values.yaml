@@ -11,6 +11,10 @@ imagePullSecrets: []
 
 containerPort: 3000
 
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
 env:
 - name: APP_VERSION
   value: "git-e19bd71"
