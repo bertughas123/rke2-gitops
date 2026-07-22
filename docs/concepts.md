@@ -1,11 +1,14 @@
 # Concepts
 
-## Application Repository vs GitOps Repository
+## Application Repository vs GitOps Repository vs Chart Repository
 
 The application repository answers what should be built.
 
 The GitOps repository answers what should run in the cluster and with which
 configuration.
+
+The reusable chart repository answers which common Helm templates can be shared
+by multiple GitOps repositories.
 
 ## CI vs CD
 
@@ -32,6 +35,12 @@ Jenkins does not deploy directly to the Kubernetes cluster.
 
 A Helm chart contains reusable templates. A values file contains the environment
 or application-specific input for those templates.
+
+In this project:
+
+- reusable chart templates live in `reusable-helm-charts`;
+- application and environment values live in `rke2-gitops`;
+- application source code and Docker image build files live in `app-for-gitops`.
 
 ## Application vs ApplicationSet
 

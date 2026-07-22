@@ -1,25 +1,27 @@
 # Repository Structure
 
-This project uses two GitHub repositories.
+This project uses three GitHub repositories.
 
 ## Repositories
 
-| Repository         | Responsibility                                                                      | Phase 0 local path                                        |
+| Repository         | Responsibility                                                                      | Local path                                                |
 | ------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `rke2-gitops`    | GitOps desired state, Argo CD resources, Helm chart, values files and documentation | `/Users/bertughas/Documents/rke2-gitops/rke2-gitops`    |
+| `rke2-gitops`    | GitOps desired state, Argo CD resources, values files and documentation             | `/Users/bertughas/Documents/rke2-gitops/rke2-gitops`    |
 | `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts              | `/Users/bertughas/Documents/rke2-gitops/app-for-gitops` |
+| `reusable-helm-charts` | Reusable Helm chart source shared by GitOps projects                          | `/Users/bertughas/Documents/rke2-gitops/reusable-helm-charts` |
 
 These are sibling repositories under the same parent directory:
 
 ```text
 /Users/bertughas/Documents/rke2-gitops/
 ├── rke2-gitops/
-└── app-for-gitops/
+├── app-for-gitops/
+└── reusable-helm-charts/
 ```
 
 They are pushed to GitHub separately. `rke2-gitops` is not the parent repository
-of `app-for-gitops`, and `app-for-gitops` must not be committed inside
-`rke2-gitops`.
+of `app-for-gitops` or `reusable-helm-charts`, and sibling repositories must not
+be committed inside each other.
 
 ## Current GitOps Tree
 
@@ -34,6 +36,7 @@ rke2-gitops/
 │   └── projects/
 │       ├── dev.yaml
 │       └── platform.yaml
+├── apps-values/
 ├── bootstrap/
 │   └── root-app.yaml
 ├── Brewfile
@@ -59,6 +62,15 @@ rke2-gitops/
 │       ├── faz1.md
 │       └── faz2.md
 └── rke2-gitops-portfoy-aksiyon-plani-final.md
+```
+
+Generic Helm chart source is not part of the desired-state tree. Reusable chart
+source lives in the sibling `reusable-helm-charts` repository under:
+
+```text
+reusable-helm-charts/
+└── charts/
+    └── generic-app-chart/
 ```
 
 ## Argo CD Recursive Directory Boundary
@@ -113,11 +125,14 @@ yet will be created only when their phase starts.
 rke2-gitops/
 ├── bootstrap/
 ├── argocd/
-├── helm-charts/
 ├── apps-values/
 ├── platform-values/
 └── platform-manifests/
 ```
+
+The GitOps repository stores values and Argo CD Application resources that
+reference reusable charts. It does not own the source of
+`generic-app-chart`.
 
 ## Future Application Target Tree
 

@@ -2,15 +2,27 @@
 
 ## Repository Split
 
-Decision: use two repositories.
+Decision: use three repositories.
 
 | Repository | Responsibility |
 | --- | --- |
 | `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts |
-| `rke2-gitops` | Kubernetes manifests, Argo CD applications, Helm chart, values files and documentation |
+| `rke2-gitops` | Kubernetes manifests, Argo CD applications, values files and documentation |
+| `reusable-helm-charts` | Reusable Helm chart source shared by GitOps projects |
 
-Reason: application build concerns and cluster desired state should remain
-separate.
+Reason: application build concerns, cluster desired state and reusable chart
+source should remain separate.
+
+## Reusable Helm Chart Repository
+
+Decision: the generic application chart source lives in `reusable-helm-charts`.
+
+Reason: the chart is intended to be reusable by more than one GitOps project.
+Keeping it in a dedicated repository prevents application-specific values from
+being mixed with reusable chart templates.
+
+Constraint: application-specific and environment-specific values stay in the
+GitOps repository that deploys the application.
 
 ## Public Repositories
 

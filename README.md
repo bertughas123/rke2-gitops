@@ -7,7 +7,7 @@ The project demonstrates:
 
 - RKE2 on a local ARM64 macOS host;
 - Argo CD driven GitOps;
-- a generic Helm chart for demo applications;
+- a reusable generic Helm chart consumed from a separate chart repository;
 - External Secrets Operator with OpenBao;
 - public third-party Helm charts;
 - an operator-based PostgreSQL example with CloudNativePG;
@@ -18,7 +18,8 @@ The project demonstrates:
 | Repository         | Responsibility                                                                         |
 | ------------------ | -------------------------------------------------------------------------------------- |
 | `app-for-gitops` | Application source code, tests, Dockerfile, Jenkinsfile and CI scripts                 |
-| `rke2-gitops`    | Kubernetes manifests, Argo CD applications, Helm chart, values files and documentation |
+| `rke2-gitops`    | Kubernetes manifests, Argo CD applications, values files and documentation             |
+| `reusable-helm-charts` | Reusable Helm chart source shared by GitOps projects                              |
 
 ## Security Rule
 
@@ -55,8 +56,12 @@ The `argocd` path currently contains:
 - `AppProject/dev`;
 - `AppProject/platform`.
 
+Generic chart source is not owned by this GitOps repository anymore. Reusable
+chart code lives in `reusable-helm-charts`; this repository will keep
+application-specific Argo CD Applications and values files.
+
 See [docs/repository-structure.md](docs/repository-structure.md) for the current
-two-repository layout.
+three-repository layout.
 
 For repeatable macOS host setup, see [docs/host-bootstrap.md](docs/host-bootstrap.md).
 
