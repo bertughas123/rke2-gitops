@@ -32,8 +32,8 @@ credentials, Kubernetes Secrets during bootstrap, or OpenBao.
 
 ## Phase Status
 
-Current phase: Phase 2 completed. Preparing the next application/bootstrap
-phase.
+Current phase: Phase 4 completed. The demo application is now managed through
+an Argo CD ApplicationSet.
 
 Local RKE2 single-node cluster exists on Multipass VM `rke2-server`.
 
@@ -54,11 +54,40 @@ The `argocd` path currently contains:
 - `Namespace/argocd`;
 - `Namespace/dev`;
 - `AppProject/dev`;
-- `AppProject/platform`.
+- `AppProject/platform`;
+- `ApplicationSet/apps`;
+- `ApplicationSet/platform-helm`;
+- `ApplicationSet/platform-manifests`.
 
-Generic chart source is not owned by this GitOps repository anymore. Reusable
-chart code lives in `reusable-helm-charts`; this repository will keep
-application-specific Argo CD Applications and values files.
+The `apps` ApplicationSet scans:
+
+```text
+apps-values/dev/*
+```
+
+It currently finds:
+
+```text
+apps-values/dev/demo-app
+```
+
+and generates the `dev-demo-app` Argo CD Application.
+
+The running demo application uses:
+
+- image `ghcr.io/bertughas123/app-for-gitops:git-e19bd71`;
+- reusable chart repository `https://github.com/bertughas123/reusable-helm-charts`;
+- chart tag `generic-app-chart-v0.1.0`;
+- values file `apps-values/dev/demo-app/values.yaml`;
+- namespace `dev`.
+
+The `platform-helm` and `platform-manifests` ApplicationSets are prepared for
+future platform services. They currently generate zero Applications because no
+matching `source.yaml` files exist yet.
+
+Generic chart source is not owned by this GitOps repository. Reusable chart
+code lives in `reusable-helm-charts`; this repository keeps environment-specific
+values files, Argo CD bootstrap manifests and documentation.
 
 See [docs/repository-structure.md](docs/repository-structure.md) for the current
 three-repository layout.
@@ -68,3 +97,7 @@ For repeatable macOS host setup, see [docs/host-bootstrap.md](docs/host-bootstra
 For the Phase 1 completion record, see [docs/phase-1-report.md](docs/phase-1-report.md).
 
 For the Phase 2 completion record, see [docs/phase-2-report.md](docs/phase-2-report.md).
+
+For the Phase 3 completion record, see [docs/phase-3-report.md](docs/phase-3-report.md).
+
+For the Phase 4 completion record, see [docs/phase-4-report.md](docs/phase-4-report.md).
