@@ -1,0 +1,91 @@
+fullnameOverride: openbao
+
+global: 
+  tlsDisable: true 
+
+injector:
+  enabled: false
+
+csi:
+  enabled: false
+
+server:
+  enabled: true
+
+  image:
+    registry: quay.io
+    repository: openbao/openbao
+    tag: "2.6.0"
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  ingress:
+    enabled: false
+
+  authDelegator:
+    enabled: true
+
+  readinessProbe:
+    enabled: true
+
+  livenessProbe:
+    enabled: false
+
+  dataStorage:
+    enabled: true
+    size: 5Gi
+    storageClass: openbao-local
+    accessMode: ReadWriteOnce
+
+  auditStorage:
+    enabled: false
+
+  dev:
+    enabled: false
+
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "file" {
+        path = "/openbao/data"
+      }
+
+  ha:
+    enabled: false
+
+  serviceAccount:
+    create: true
+    name: openbao
+
+  statefulSet:
+    securityContext:
+      pod:
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      container:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+
+ui:
+  enabled: true
+  serviceType: ClusterIP
