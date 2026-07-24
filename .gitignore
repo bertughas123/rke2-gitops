@@ -40,11 +40,6 @@ id_rsa.*
 id_ed25519
 id_ed25519.*
 known_hosts
-secret.yaml
-secrets.yaml
-*-secret.yaml
-*-secrets.yaml
-!argocd/namespaces/external-secrets.yaml
 
 # Terraform and local IaC state, if experiments are added later
 .terraform/
