@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-local-storage
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "60"
+    argocd.argoproj.io/sync-options: Prune=confirm
+spec:
+  project: platform
+  source:
+    repoURL: git@github.com:bertughas123/rke2-gitops.git
+    targetRevision: main
+    path: platform-manifests/local-storage
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
