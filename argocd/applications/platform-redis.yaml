@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-redis
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "70"
+    argocd.argoproj.io/sync-options: Prune=confirm
+spec:
+  project: platform
+
+  sources:
+    - repoURL: registry-1.docker.io/cloudpirates
+      chart: redis
+      targetRevision: 0.32.4
+      helm:
+        releaseName: redis
+        valueFiles:
+          - $values/platform-values/redis/values.yaml
+
+    - repoURL: git@github.com:bertughas123/rke2-gitops.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redis
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
