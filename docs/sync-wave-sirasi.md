@@ -13,7 +13,7 @@
 | `30` | `platform-external-secrets` | Current |
 | `40` | `platform-secretstores` / `ClusterSecretStore` | Current |
 | `50` | `platform-external-secrets-resources` / `ExternalSecret` resources | Current |
-| `60` | `platform-redis-storage` / Redis StorageClass and PV | Planned in Phase 6 |
+| `60` | `platform-local-storage` / shared StorageClass and Redis PV | Planned in Phase 6 |
 | `70` | `platform-redis` / Redis Helm chart | Planned in Phase 6 |
 
 ```text
