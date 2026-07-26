@@ -1,0 +1,79 @@
+fullnameOverride: redis
+
+architecture: standalone
+
+image:
+  registry: docker.io
+  repository: redis
+  tag: "8.8.0@sha256:234c902a2db49461a129e2d4aeff85b28cf20187ed274a67f6e50995fa713c7b"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 6379
+
+auth:
+  enabled: true
+  existingSecret: redis-auth
+  existingSecretPasswordKey: redis-password
+
+tls:
+  enabled: false
+
+persistence:
+  enabled: true
+  storageClass: local-storage
+  accessMode: ReadWriteOnce
+  size: 2Gi
+  mountPath: /data
+
+extraConfig: |
+  dir /data
+  appendonly yes
+  appendfsync everysec
+
+persistentVolumeClaimRetentionPolicy:
+  enabled: true
+  whenDeleted: Retain
+  whenScaled: Retain
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+containerSecurityContext:
+  runAsUser: 999
+  runAsGroup: 999
+  runAsNonRoot: true
+  privileged: false
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+  seccompProfile:
+    type: RuntimeDefault
+
+podSecurityContext:
+  fsGroup: 999
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
+
+metrics:
+  enabled: false
+
+serviceAccount:
+  create: true
+  name: redis
+  automountServiceAccountToken: false
+
+networkPolicy:
+  enabled: false
