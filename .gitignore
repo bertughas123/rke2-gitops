@@ -10,6 +10,14 @@
 *.swo
 *~
 
+# Local Codex instructions and configuration
+AGENTS.md
+agents.md
+.codex/
+.codex.toml
+codex.toml
+codex.*.toml
+
 # Logs and temporary files
 *.log
 tmp/
